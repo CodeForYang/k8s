@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ssd-pod
+spec:
+  nodeSelector:
+    mydisk: ssd  # 👈 只调度到有 mydisk=ssd 标签的节点
+  containers: 
+  - name: nginx
+    image: nginx:alpine
+    

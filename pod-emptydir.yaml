@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: shared-vol-pod
+spec:
+  containers:
+  - name: writer
+    image: alpine
+    command: ["sh", "-c", "while true; do echo $(date) >> /data/timestamps.log; sleep 2; done"]
+    volumeMounts:
+    - name: shared-data
+      mountPath: /data
+  - name: reader
+    image: alpine
+    command: ["sh", "-c", "tail -f /data/timestamps.log"]
+    volumeMounts:
+    - name: shared-data
+      mountPath: /data
+  volumes:
+  - name: shared-data
+    emptyDir: {}

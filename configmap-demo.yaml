@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  APP_MODE: "dev"
+  LOG_LEVEL: "debug"
+  config.json: |
+    {
+      "timeout": 30,
+      "retry": 3
+    }

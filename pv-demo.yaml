@@ -1,0 +1,45 @@
+---
+# 创建一个 PV（使用 hostPath 模拟，实际环境用云硬盘）
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce          # 单节点读写
+  hostPath:
+    path: /tmp/k8s-pv-data   # Kind 节点容器的路径
+---
+# 申请使用 500Mi
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: local-pvc
+spec:
+  storageClassName: ""
+  volumeName: local-pv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+---
+# Pod 使用 PVC
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pv-pod
+spec:
+  containers:
+    - name: app
+      image: alpine
+      command: ["sh", "-c", "echo '持久化数据！' > /data/test.txt; cat /data/test.txt; sleep 3600"]
+      volumeMounts:
+        - name: storage
+          mountPath: /data
+  volumes:
+    - name: storage
+      persistentVolumeClaim:
+        claimName: local-pvc
