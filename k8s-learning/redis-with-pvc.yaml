@@ -1,4 +1,14 @@
-
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -21,17 +31,7 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /data
-      volumes:
+      volumes:                     # ✅ 关键：定义 volumes 列表
         - name: data
           persistentVolumeClaim:
-            claimName: redis-data
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: redis
-spec:
-  selector:
-    app: redis
-  ports:
-    - port: 6379
+            claimName: redis-data  # 引用上面创建的 PVC

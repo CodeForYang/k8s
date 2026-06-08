@@ -1,0 +1,35 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: probe-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: probe-demo
+  template:
+    metadata:
+      labels:
+        app: probe-demo
+    spec:
+      containers:
+        - name: app
+          image: hashicorp/http-echo:latest
+          args: ["-text=Healthy!"]
+          ports:
+            - containerPort: 5678
+          livenessProbe:                          # 存活检查
+            httpGet:
+              path: /
+              port: 5678
+            initialDelaySeconds: 5                # 启动后等 5 秒再开始检查
+            periodSeconds: 10                     # 每 10 秒检查一次
+            timeoutSeconds: 3                     # 超时 3 秒
+            failureThreshold: 3                   # 连续 3 次失败才重启
+          readinessProbe:                         # 就绪检查
+            httpGet:
+              path: /
+              port: 5678
+            initialDelaySeconds: 3
+            periodSeconds: 5
