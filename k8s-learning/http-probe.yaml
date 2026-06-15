@@ -1,0 +1,22 @@
+livenessProbe:
+  httpGet:
+    path: /healthz       # 检查路径
+    port: 8080           # 容器监听端口
+    scheme: HTTP         # 可选 HTTP 或 HTTPS，默认 HTTP
+    httpHeaders:         # 可选，自定义请求头
+    - name: Custom-Header
+      value: Ready
+  initialDelaySeconds: 5  # 启动后等待5秒开始检查
+  periodSeconds: 10        # 每10秒检查一次
+  timeoutSeconds: 2        # 超时2秒
+  successThreshold: 1      # 连续1次成功认为健康
+  failureThreshold: 3      # 连续3次失败触发重启
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 8080
+  initialDelaySeconds: 3
+  periodSeconds: 5
+  timeoutSeconds: 2        # 超时2秒
+  successThreshold: 1      # 连续1次成功认为健康
+  failureThreshold: 3      # 连续3次失败触发重启

@@ -1,0 +1,14 @@
+livenessProbe:
+  tcpSocket:
+    port: 3306          # 检查的端口号
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 2
+  failureThreshold: 3
+readinessProbe:
+  tcpSocket:
+    port: 6379          # Redis 端口
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  timeoutSeconds: 2
+  failureThreshold: 3
