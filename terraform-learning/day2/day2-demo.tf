@@ -17,7 +17,7 @@ resource "random_string" "suffix" {
 }
 
 resource "local_file" "config" {
-    content = = <<-EOF
+    content = <<-EOF
       server_name=web-${random_string.suffix.result}
       environment=${var.env}
       log_level=${local.log_level}
@@ -30,6 +30,7 @@ variable "env" {
     type        = string
     default     = "dev"
 }
+
 
 # 本地变量
 locals {
