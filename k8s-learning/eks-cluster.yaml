@@ -1,0 +1,32 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: my-k8s-tokyo
+  region: ap-northeast-1
+  version: "1.31"
+
+managedNodeGroups:
+  - name: workers-1a
+    instanceType: t3.medium
+    desiredCapacity: 2
+    minSize: 2
+    maxSize: 4
+    availabilityZones: ["ap-northeast-1a"]
+    labels:
+      role: worker
+      zone: az1
+    tags:
+      Environment: learning
+  
+  - name: workers-1c
+    instanceType: t3.medium
+    desiredCapacity: 2
+    minSize: 2
+    maxSize: 4
+    availabilityZones: ["ap-northeast-1c"]
+    labels:
+      role: worker
+      zone: az2
+    tags:
+      Environment: learning
+  
