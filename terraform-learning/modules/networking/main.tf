@@ -17,7 +17,7 @@ resource "aws_vpc" "main" {
 
 # 创建两个公有子网（分布在不同的可用区）
 resource "aws_subnet" "public" {
-  count             = 2
+  count             = 2  # 为了备份
   vpc_id            = aws_vpc.main.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index)
   availability_zone = data.aws_availability_zones.available.names[count.index]

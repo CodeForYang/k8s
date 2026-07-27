@@ -92,7 +92,7 @@ resource "aws_instance" "web" {
   # 放到公有子网，并关联安全组
   subnet_id              = var.public_subnet_ids[count.index % length(var.public_subnet_ids)]
   vpc_security_group_ids = [aws_security_group.web.id]
-  associate_public_ip_address = true
+  associate_public_ip_address = true  #分配公网 IP，这样才能从外网下载资源
 
   # 启动时安装 HTTP 服务
   user_data = <<-EOF
