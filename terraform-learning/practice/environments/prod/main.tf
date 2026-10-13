@@ -22,8 +22,10 @@ module "config" {
     region = "ap-northeast-1"
     log_level = "debug"
     endpoint = "http://localhost:8080"
+    cache_ttl = "300"
+    auth_method = "iam"
   }
-  feature_flags = [ "logging", "debug_mode" ]
+  feature_flags = [ "logging", "debug_mode" , "cache", "audit" ]
   tags = {
     Owner = "prod-team"
     Env = "prod"

@@ -9,8 +9,8 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "Edward-s3-terraform-state"
-    key    = "terraform-learning/practice/environments/staging/terraform.tfstate"
+    bucket = "edward-s3-terraform-tfstate"
+    key    = "staging/terraform.tfstate"
     region = "ap-northeast-1" 
     encrypt = true
     use_lockfile = true
